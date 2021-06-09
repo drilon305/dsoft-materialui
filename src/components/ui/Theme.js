@@ -54,6 +54,11 @@ typography: {
     fontWeight: 300,
     color: dsGrey
    },
+   subtitle2: {
+       color: 'white',
+       fontSize: '1.25em',
+       fontWeight: 300
+   },
    learnButton: {
     borderColor: dsBlue,
     color: dsBlue,
