@@ -177,6 +177,11 @@ const Header = ({value, setValue, selectedIndex, setSelectedIndex}) => {
             }
           }
           break;
+
+          case '/estimate': 
+            setValue(5);
+          break;
+        
         default:
           break;
       }
@@ -193,19 +198,26 @@ const Header = ({value, setValue, selectedIndex, setSelectedIndex}) => {
         indicatorColor="primary"
       >
         {routes.map((route, index) => (
-          <Tab 
-          key={`${route}${index}`}
-          className={classes.tab}
-          label={route.name}
-          component={Link} to={route.link} 
-          aria-owns={route.ariaOwns} 
-          aria-haspopup={route.ariaPopup}
-          onMouseOver={route.mouseOver} />
+          <Tab
+            key={`${route}${index}`}
+            className={classes.tab}
+            label={route.name}
+            component={Link}
+            to={route.link}
+            aria-owns={route.ariaOwns}
+            aria-haspopup={route.ariaPopup}
+            onMouseOver={route.mouseOver}
+          />
         ))}
-
-
       </Tabs>
-      <Button variant="contained" color="secondary" className={classes.button}>
+      <Button
+        component={Link}
+        to="estimate"
+        variant="contained"
+        color="secondary"
+        className={classes.button}
+        onClick={() => {setValue(5)}}
+      >
         Free Estimate
       </Button>
       <Menu
@@ -216,7 +228,7 @@ const Header = ({value, setValue, selectedIndex, setSelectedIndex}) => {
         classes={{ paper: classes.menu }}
         MenuListProps={{ onMouseLeave: handleClose }}
         elevation={0}
-        style={{zIndex: 1302}}
+        style={{ zIndex: 1302 }}
         keepMounted
       >
         {menuOptions.map((option, i) => (
@@ -225,7 +237,7 @@ const Header = ({value, setValue, selectedIndex, setSelectedIndex}) => {
             component={Link}
             to={option.link}
             classes={{ root: classes.menuItem }}
-            onClick={event => {
+            onClick={(event) => {
               handleMenuItemClick(event, i);
               setValue(1);
               handleClose();

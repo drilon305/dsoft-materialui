@@ -16,25 +16,56 @@ function App() {
 
 
   return (
-<Router>
-    <ThemeProvider theme={theme}>
-      <Header value={value} setValue={setValue} selectedIndex ={selectedIndex} 
-      setSelectedIndex={setSelectedIndex} />
-      <Switch>
-      <Route exact path="/" component={LandingPage} />
-       <Route exact path="/services" component={() => <div>Services</div> } />
-       <Route exact path="/aboutus" component={() => <div>About Us</div> } />
-       <Route exact path="/contact" component={() => <div>Contact Us</div> } />
-       <Route exact path="/customsoftware" component={() => <div>Custom Software Development</div> } />
-       <Route exact path="/mobileapps" component={() => <div>Mobile Apps</div> } />
-       <Route exact path="/revolution" component={() => <div>Revolution</div> } />
-       <Route exact path="/websites" component={() => <div>Websites</div> } />
-       <Route exact path="/estimate" component={() => <div>Estimate</div> } />
-      </Switch>
-      <Footer value={value} setValue={setValue} selectedIndex ={selectedIndex} 
-      setSelectedIndex={setSelectedIndex} />
+    <Router>
+      <ThemeProvider theme={theme}>
+        <Header
+          value={value}
+          setValue={setValue}
+          selectedIndex={selectedIndex}
+          setSelectedIndex={setSelectedIndex}
+        />
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() =>
+              <LandingPage
+                setValue={setValue}
+                setSelectedIndex={setSelectedIndex}
+              />
+            }
+          />
+          <Route exact path="/services" component={() => <div>Services</div>} />
+          <Route exact path="/aboutus" component={() => <div>About Us</div>} />
+          <Route
+            exact
+            path="/contact"
+            component={() => <div>Contact Us</div>}
+          />
+          <Route
+            exact
+            path="/customsoftware"
+            component={() => <div>Custom Software Development</div>}
+          />
+          <Route
+            exact
+            path="/mobileapps"
+            component={() => <div>Mobile Apps</div>}
+          />
+          <Route
+            exact
+            path="/revolution"
+            component={() => <div>Revolution</div>}
+          />
+          <Route exact path="/websites" component={() => <div>Websites</div>} />
+          <Route exact path="/estimate" component={() => <div>Estimate</div>} />
+        </Switch>
+        <Footer
+          setValue={setValue}
+          setSelectedIndex={setSelectedIndex}
+        />
       </ThemeProvider>
-      </Router>
+    </Router>
   );
 }
 
