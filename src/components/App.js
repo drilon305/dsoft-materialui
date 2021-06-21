@@ -12,6 +12,7 @@ import LandingPage from './LandingPage';
 import Services from './Services';
 import CustomSoftware from './CustomSoftware';
 import MobileApps from './MobileApps';
+import Websites from './Websites';
 
 
 function App() {
@@ -80,11 +81,12 @@ function App() {
             path="/revolution"
             component={() => <div>Revolution</div>}
           />
-          <Route
-           exact
-          path="/websites" 
-          component={() => <div>Website</div>}
-            />
+          <Route exact path="/websites"render={() =>
+              <Websites
+                setValue={setValue}
+                setSelectedIndex={setSelectedIndex}
+              />
+            } />
           <Route exact path="/estimate" component={() => <div>Estimate</div>} />
         </Switch>
         <Footer setValue={setValue} setSelectedIndex={setSelectedIndex} />

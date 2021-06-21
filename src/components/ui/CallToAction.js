@@ -72,7 +72,7 @@ const CallToAction = ({setValue, setSelectedIndex}) => {
           item
           style={{
             marginLeft: matchesSM ? 0 : "5em",
-            textAlign: matchesSM ? "center" : "inherit",
+            textAlign: matchesSM ? "center" : "inherit"
           }}
         >
           <Grid container direction="column">

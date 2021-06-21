@@ -10,7 +10,6 @@ import twitter from '../../assets/twitter.svg';
 import instagram from '../../assets/instagram.svg';
 
 
-const Footer = ({ value, setValue, selectedIndex, setSelectedIndex }) => {
   const useStyles = makeStyles((theme) => ({
     footer: {
       backgroundColor: theme.palette.common.blue,
@@ -59,11 +58,13 @@ const Footer = ({ value, setValue, selectedIndex, setSelectedIndex }) => {
     }
   }));
 
+  const Footer = ({ value, setValue, selectedIndex, setSelectedIndex }) => {
+
   const classes = useStyles();
 
   return (
     <footer className={classes.footer}>
-      <Hidden xsDown>
+      <Hidden mdDown>
         <Grid container className={classes.mainContainer} justify="center">
           <Grid item className={classes.gridItem}>
             <Grid container direction="column" spacing={2}>
@@ -221,7 +222,12 @@ const Footer = ({ value, setValue, selectedIndex, setSelectedIndex }) => {
         src={footer}
         className={classes.adornment}
       />
-      <Grid container justify='flex-end' spacing={2} className={classes.socialContainer}>
+      <Grid
+        container
+        justify="flex-end"
+        spacing={2}
+        className={classes.socialContainer}
+      >
         <Grid
           item
           component={"a"}
@@ -239,7 +245,7 @@ const Footer = ({ value, setValue, selectedIndex, setSelectedIndex }) => {
           target="_blank"
         >
           <img alt="twitter logo" src={twitter} className={classes.icon} />
-        </Grid> 
+        </Grid>
         <Grid
           item
           component={"a"}
