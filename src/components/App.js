@@ -9,6 +9,10 @@ import {
 } from "react-router-dom";
 import Footer from './ui/Footer';
 import LandingPage from './LandingPage';
+import Services from './Services';
+import CustomSoftware from './CustomSoftware';
+import MobileApps from './MobileApps';
+
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0); 
@@ -28,14 +32,23 @@ function App() {
           <Route
             exact
             path="/"
-            render={() =>
+            render={() => (
               <LandingPage
                 setValue={setValue}
                 setSelectedIndex={setSelectedIndex}
               />
-            }
+            )}
           />
-          <Route exact path="/services" component={() => <div>Services</div>} />
+          <Route
+            exact
+            path="/services"
+            render={() => (
+              <Services
+                setValue={setValue}
+                setSelectedIndex={setSelectedIndex}
+              />
+            )}
+          />
           <Route exact path="/aboutus" component={() => <div>About Us</div>} />
           <Route
             exact
@@ -45,25 +58,36 @@ function App() {
           <Route
             exact
             path="/customsoftware"
-            component={() => <div>Custom Software Development</div>}
+            render={() => (
+              <CustomSoftware
+                setValue={setValue}
+                setSelectedIndex={setSelectedIndex}
+              />
+            )}
           />
           <Route
             exact
             path="/mobileapps"
-            component={() => <div>Mobile Apps</div>}
+            render={() => (
+              <MobileApps
+                setValue={setValue}
+                setSelectedIndex={setSelectedIndex}
+              />
+            )}
           />
           <Route
             exact
             path="/revolution"
             component={() => <div>Revolution</div>}
           />
-          <Route exact path="/websites" component={() => <div>Websites</div>} />
+          <Route
+           exact
+          path="/websites" 
+          component={() => <div>Website</div>}
+            />
           <Route exact path="/estimate" component={() => <div>Estimate</div>} />
         </Switch>
-        <Footer
-          setValue={setValue}
-          setSelectedIndex={setSelectedIndex}
-        />
+        <Footer setValue={setValue} setSelectedIndex={setSelectedIndex} />
       </ThemeProvider>
     </Router>
   );
