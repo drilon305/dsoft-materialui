@@ -59,6 +59,11 @@ typography: {
        fontSize: '1.25em',
        fontWeight: 300
    },
+   body1: {
+    fontSize: '1.25rem',
+    color: dsGrey,
+    fontWeight: 300
+   },
    learnButton: {
     borderColor: dsBlue,
     color: dsBlue,
