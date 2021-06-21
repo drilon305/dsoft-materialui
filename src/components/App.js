@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import Footer from './ui/Footer';
 import LandingPage from './LandingPage';
+import Websites from './Websites';
 import Services from './Services';
 import CustomSoftware from './CustomSoftware';
 import MobileApps from './MobileApps';
@@ -80,11 +81,15 @@ function App() {
             path="/revolution"
             component={() => <div>Revolution</div>}
           />
-          <Route
-           exact
-          path="/websites" 
-          component={() => <div>Website</div>}
-            />
+          <Route exact
+             path="/websites"
+             render={() =>
+              <Websites
+                setValue={setValue}
+                setSelectedIndex={setSelectedIndex}
+              />
+            } />
+
           <Route exact path="/estimate" component={() => <div>Estimate</div>} />
         </Switch>
         <Footer setValue={setValue} setSelectedIndex={setSelectedIndex} />
