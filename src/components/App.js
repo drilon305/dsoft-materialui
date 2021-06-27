@@ -13,10 +13,7 @@ import Services from './Services';
 import CustomSoftware from './CustomSoftware';
 import MobileApps from './MobileApps';
 import Websites from './Websites';
-import Websites from './Websites';
-import Services from './Services';
-import CustomSoftware from './CustomSoftware';
-import MobileApps from './MobileApps';
+import Revolution from './Revolution';
 
 
 
@@ -84,7 +81,12 @@ function App() {
           <Route
             exact
             path="/revolution"
-            component={() => <div>Revolution</div>}
+            render={() => (
+              <Revolution
+                setValue={setValue}
+                setSelectedIndex={setSelectedIndex}
+              />
+            )}
           />
           <Route exact
              path="/websites"
