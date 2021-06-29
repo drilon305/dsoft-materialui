@@ -14,6 +14,7 @@ import CustomSoftware from './CustomSoftware';
 import MobileApps from './MobileApps';
 import Websites from './Websites';
 import Revolution from './Revolution';
+import About from './About';
 
 
 
@@ -52,7 +53,16 @@ function App() {
               />
             )}
           />
-          <Route exact path="/aboutus" component={() => <div>About Us</div>} />
+          <Route 
+          exact 
+          path="/aboutus" 
+          render={() =>
+            <About
+            setValue={setValue}
+            setSelectedIndex={setSelectedIndex}
+          />
+         }
+             />
           <Route
             exact
             path="/contact"
