@@ -13,6 +13,8 @@ import design from '../assets/designIcon.svg';
 import build from '../assets/buildIcon.svg';
 import launch from '../assets/launchIcon.svg';
 import maintain from '../assets/maintainIcon.svg';
+import CallToAction from './ui/CallToAction';
+
 import iterate from '../assets/iterateIcon.svg';
 
 const useStyles = makeStyles(theme => ({
@@ -763,6 +765,10 @@ const Revolution = ({ setValue, setSelectedIndex }) => {
             <img src={iterate} alt="falling dominoes" width='100%' />
           </Grid>
         </Grid>
+        <Grid item>
+          <CallToAction />
+        </Grid>
+
       </Grid>
     );
 

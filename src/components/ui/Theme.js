@@ -27,7 +27,7 @@ typography: {
     fontSize: '1rem',
    },
    estimate: {
-    fontFamily: 'Pacifico',
+    fontFamily: 'Montserrat',
     fontSize: '1rem',
     textTransform: 'none',
     color: 'white'
@@ -73,5 +73,27 @@ typography: {
     fontFamily: 'Roboto',
     fontWeight: 'bold',
    }
+},
+overrides: {
+    MuiInputLabel: {
+        root: {
+            color: dsBlue,
+            fontSize: '1rem'
+        }
+    },
+    MuiInput: {
+        root: {
+            color: dsGrey,
+            fontWeight: 300
+        },
+        underline: {
+            '&:before': {
+                borderBottom: `2px solid ${dsBlue}`
+            },
+            '&:hover:not($disabled):not($focused):not($error):before': {
+                borderBottom: `2px solid ${dsBlue}`
+            }
+        }
+    }
 }
 })

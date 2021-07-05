@@ -15,6 +15,7 @@ import MobileApps from './MobileApps';
 import Websites from './Websites';
 import Revolution from './Revolution';
 import About from './About';
+import Contact from './Contact';
 
 
 
@@ -53,20 +54,22 @@ function App() {
               />
             )}
           />
-          <Route 
-          exact 
-          path="/aboutus" 
-          render={() =>
-            <About
-            setValue={setValue}
-            setSelectedIndex={setSelectedIndex}
+          <Route
+            exact
+            path="/aboutus"
+            render={() => (
+              <About setValue={setValue} setSelectedIndex={setSelectedIndex} />
+            )}
           />
-         }
-             />
           <Route
             exact
             path="/contact"
-            component={() => <div>Contact Us</div>}
+            render={() => (
+              <Contact
+                setValue={setValue}
+                setSelectedIndex={setSelectedIndex}
+              />
+            )}
           />
           <Route
             exact
@@ -98,14 +101,16 @@ function App() {
               />
             )}
           />
-          <Route exact
-             path="/websites"
-             render={() =>
+          <Route
+            exact
+            path="/websites"
+            render={() => (
               <Websites
                 setValue={setValue}
                 setSelectedIndex={setSelectedIndex}
               />
-            } />
+            )}
+          />
           <Route exact path="/estimate" component={() => <div>Estimate</div>} />
         </Switch>
         <Footer setValue={setValue} setSelectedIndex={setSelectedIndex} />
