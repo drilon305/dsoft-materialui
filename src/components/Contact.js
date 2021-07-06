@@ -80,10 +80,47 @@ const Contact = ({ setValue, setSelectedIndex }) => {
 
 
   const [name, setName] = useState('');
+  
+
   const [email, setEmail] = useState('');
+  const [emailHelper, setEmailHelper] = useState('');
+
   const [phone, setPhone] = useState('');
+  const [phoneHelper, setPhoneHelper] = useState('');
+
   const [message, setMessage] = useState('');
 
+
+  const onChange = e => {
+    let valid;
+
+    switch(e.target.id) {
+      case 'email':
+        setEmail(e.target.value)
+        valid = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(e.target.value)
+
+        if(!valid) {
+          setEmailHelper('Invalid Email')
+        } else {
+          setEmailHelper('')
+        }
+        break;
+
+        case 'phone':
+          setPhone(e.target.value)
+          valid = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(e.target.value)
+
+          if(!valid) {
+            setPhoneHelper('Invalid phone.')
+          } else {
+            setPhoneHelper('')
+          }
+          break;
+
+        default:
+        break;
+    }
+  }
 
 
   return (
@@ -96,7 +133,7 @@ const Contact = ({ setValue, setSelectedIndex }) => {
         alignItems="center"
         style={{
           marginBottom: matchesMD ? "5em" : 0,
-          marginTop: matchesSM ? '1em' : matchesMD ? "5em" : 0,
+          marginTop: matchesSM ? "1em" : matchesMD ? "5em" : 0,
         }}
         lg={4}
         xl={3}
@@ -132,7 +169,7 @@ const Contact = ({ setValue, setSelectedIndex }) => {
                   variant="body1"
                   style={{ color: theme.palette.common.blue }}
                 >
-                  (389) 70585031
+                 <a href='tel:38970585031' style={{textDecoration: 'none', color: 'inherit' }} >  (389) 70585031 </a>
                 </Typography>
               </Grid>
             </Grid>
@@ -149,7 +186,7 @@ const Contact = ({ setValue, setSelectedIndex }) => {
                   variant="body1"
                   style={{ color: theme.palette.common.blue, fontSize: "1rem" }}
                 >
-                  drilonsl305@gmail.com
+                  <a href='mailto:drilonsl305@gmail.com' style={{textDecoration: 'none', color: 'inherit' }}> drilonsl305@gmail.com </a>
                 </Typography>
               </Grid>
             </Grid>
@@ -170,19 +207,23 @@ const Contact = ({ setValue, setSelectedIndex }) => {
                 <Grid item style={{ marginBottom: "0.5em" }}>
                   <TextField
                     label="Email"
+                    error={emailHelper.length !== 0}
                     id="email"
+                    helperText={emailHelper}
                     fullWidth
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={onChange}
                   />
                 </Grid>
                 <Grid item style={{ marginBottom: "0.5em" }}>
                   <TextField
                     label="Phone"
+                    error={phoneHelper.length !== 0}
+                    helperText={phoneHelper}
                     id="phone"
                     fullWidth
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
+                    onChange={onChange}
                   />
                 </Grid>
               </Grid>
@@ -204,7 +245,16 @@ const Contact = ({ setValue, setSelectedIndex }) => {
                 justify="center"
                 style={{ marginTop: "2em" }}
               >
-                <Button variant="contained" className={classes.sendButton}>
+                <Button
+                  disabled={
+                    name.length === 0 ||
+                    message.length === 0 ||
+                    phoneHelper.length === 0 ||
+                    emailHelper === 0
+                  }
+                  variant="contained"
+                  className={classes.sendButton}
+                >
                   Send Message
                   <img
                     src={airplane}
