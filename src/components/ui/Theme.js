@@ -2,7 +2,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 
 
 const dsBlue = '#4791db';
-const dsOrange = '#ff9800';
+const dsOrange = '#FFBA60';
 const dsGrey = '#868686';
 
 export default createMuiTheme({
@@ -27,7 +27,7 @@ typography: {
     fontSize: '1rem',
    },
    estimate: {
-    fontFamily: 'Montserrat',
+    fontFamily: 'Pacifico',
     fontSize: '1rem',
     textTransform: 'none',
     color: 'white'
@@ -48,6 +48,12 @@ typography: {
        fontSize: '1.75rem',
        color: dsBlue,
        fontWeight: 700
+   },
+   h6: {
+    fontWeight: 500,
+    fontFamily: 'Raleway',
+    color: dsBlue,
+    lineHeight: 1
    },
    subtitle1: {
        fontSize: '1.25rem',
