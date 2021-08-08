@@ -215,7 +215,7 @@ const Contact = ({ setValue, setSelectedIndex }) => {
               item
               container
               direction="column"
-              style={{maxWidth: '20em'}}
+              style={{width: '20em'}}
             >
               <Grid item style={{ marginBottom: "0.5em" }}>
                 <TextField
@@ -248,7 +248,7 @@ const Contact = ({ setValue, setSelectedIndex }) => {
                   />
                 </Grid>
               </Grid>
-              <Grid item style={{maxWidth: '20em'}}>
+              <Grid item style={{width: '20em'}}>
                 <TextField
                   InputProps={{ disableUnderline: true }}
                   value={message}
@@ -292,7 +292,7 @@ const Contact = ({ setValue, setSelectedIndex }) => {
       <Dialog
         style={{ zIndex: 1302 }}
         open={open}
-        fullScreen={matchesXS}
+        fullScreen={matchesSM}
         onClose={() => setOpen(false)}
         PaperProps={{
           style: {
@@ -316,7 +316,9 @@ const Contact = ({ setValue, setSelectedIndex }) => {
         }}
       >
         <DialogContent>
-          <Grid  container direciton="column" style={{maxWidth: '19em'}}>
+          <Grid  container direciton="column" style={{width: '20em',
+           marginLeft: matchesSM ? '5em' : 0,
+          }}>
             <Grid item>
               <Typography align='center' variant="h4" gutterBottom>
                 Confirm Message
@@ -353,7 +355,7 @@ const Contact = ({ setValue, setSelectedIndex }) => {
                 />
               </Grid>
             </Grid>
-            <Grid item style={{maxWidth: matchesXS ? '100%' : '20em'}}>
+            <Grid item style={{width: '20em'}}>
               <TextField
                 InputProps={{ disableUnderline: true }}
                 value={message}

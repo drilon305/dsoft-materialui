@@ -9,6 +9,7 @@ import Dialog from '@material-ui/core/Dialog/'
 import DialogContent from '@material-ui/core/DialogContent'
 import TextField from '@material-ui/core/TextField'
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Hidden from '@material-ui/core/Hidden'
 
 import check from '../assets/check.svg'
 import send from '../assets/send.svg'
@@ -57,7 +58,8 @@ const useStyles = makeStyles((theme) => ({
     },
     message: {
       border: `2px solid ${theme.palette.common.blue}`,
-      marginTop: '5em',
+      marginTop: '3em',
+      marginBottom: '2em',
       borderRadius: 5
     },
     specialText: {
@@ -333,6 +335,8 @@ const Estimate = () => {
   const theme = useTheme();
 
   const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
+  const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+  const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
   const [questions, setQuestions] = useState(defaultQuestions);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [name, setName] = useState('');
@@ -430,14 +434,29 @@ switch(currentlyActive[0].subtitle) {
     case 'Custom Software Development': 
     setQuestions(softwareQuestions)
     setService(newSelected.title)
+    setPlatforms([])
+    setFeatures([])
+    setCustomFeatures('')
+    setCategory('')
+    setUsers('')
     break;
     case 'iOS/Android App Development': 
     setQuestions(softwareQuestions)
     setService(newSelected.title)
+    setPlatforms([])
+    setFeatures([])
+    setCustomFeatures('')
+    setCategory('')
+    setUsers('')
     break;
     case 'Website Development': 
     setQuestions(websiteQuestions)
     setService(newSelected.title)
+    setPlatforms([])
+    setFeatures([])
+    setCustomFeatures('')
+    setCategory('')
+    setUsers('')
     break;
     default:
       setQuestions(newQuestions)
@@ -491,11 +510,12 @@ selections.map(options => options.map(option => cost += option.cost))
 if (questions.length > 2) {
   const userCost = questions
     .filter((question) => question.title === "How many users do you expect?")
-    .map((question) => question.options.filter((option) => option.selected))[0][0].cost;
+    .map((question) => question.options.filter((option) => option.selected))[0][0];
 
+    setUsers(userCost.title)
 
-cost -= userCost
-cost *= userCost
+cost -= userCost.cost;
+cost *= userCost.cost;
 
 }
 
@@ -518,18 +538,173 @@ const getPlatforms = () => {
   }
 };
 
+const getFeatures = () => {
+  let newFeatures = [];
+
+  if (questions.length > 2) {
+    questions
+      .filter(
+        (question) =>
+          question.title === "Which features do you expect to use?"
+      )
+      .map((question) => question.options.filter((option) => option.selected))
+      .map(option => option.map(newFeature => newFeatures.push(newFeature.title)))
+
+     setFeatures(newFeatures)
+  }
+};
+
+
+const getCustomFeatures = () => {
+  if (questions.length > 2) {
+    const newCustomFeatures = questions.filter(
+      (question) =>
+        question.title === "What type of custom features do you expect to need?")
+        .map(question => question.options.filter(option => option.selected))[0][0].title
+
+        setCustomFeatures(newCustomFeatures)
+  }
+};
+
+
+const getCategory = () => {
+  if(questions.length === 2) {
+    const newCategory = questions.filter(question => question.title === 'Which type of website are you wanting?')
+    [0].options.filter(option => option.selected)[0].title
+
+    setCategory(newCategory)
+  }
+}
+
+
+
+const softwareSelection = (
+  <Grid container direction='column'>
+                  <Grid item container alignItems='center' style={{marginBottom: '1.25em'}}>
+                    <Grid item xs={2}>
+                      <img src={check} alt='checkmark' />
+                    </Grid>
+                    <Grid item xs={10}>
+                      <Typography variant='body1'>
+                        You want {service}
+                        {platforms.length > 0 ? ` for ${
+                              //if only web application is selected...
+                              platforms.indexOf("Web Application") > -1 &&
+                              platforms.length === 1
+                                ? 
+                                  "a Web Application."
+                                : //otherwise, if web application and another platform is selected...
+                                platforms.indexOf("Web Application") > -1 &&
+                                  platforms.length === 2
+                                ? 
+                                  `a Web Application and an ${platforms[1]}.`
+                                : //otherwise, if only one platform is selected which isn't web application...
+                                platforms.length === 1
+                                ? 
+                                  `an ${platforms[0]}`
+                                : //otherwise, if other two options are selected...
+                                platforms.length === 2
+                                ? 
+                                  "an iOS Application and an Android Application."
+                                : //otherwise if all three are selected...
+                                platforms.length === 3
+                                ? 
+                                  "a Web Application, an iOS Application, and an Android Application."
+                                : null
+                            }` : null}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                  <Grid item container alignItems='center' style={{marginBottom: '1.25em'}}>
+                    <Grid item xs={2}>
+                      <img src={check} alt='checkmark' />
+                    </Grid>
+                    <Grid item xs={10}>
+                      <Typography variant='body1'>
+                      {"with "}
+                        {/* if we have features... */}
+                        {features.length > 0
+                          ? //...and there's only 1...
+                            features.length === 1
+                              ? //then end the sentence here
+                              `${features[0]}.`
+                              : //otherwise, if there are two features...
+                            features.length === 2
+                              ? //...then end the sentence here
+                              `${features[0]} and ${features[1]}.`
+                              : //otherwise, if there are three or more features...
+                              features
+                            //filter out the very last feature...
+                            .filter(
+                              (feature, index) =>
+                              index !== features.length - 1
+                            )
+                            //and for those features return their name...
+                            .map((feature, index) => (
+                              <span key={index}>{`${feature}, `}</span>
+                            ))
+                          : null}
+                        {features.length > 2
+                            ? //...and then finally add the last feature with 'and' in front of it
+                            ` and ${features[features.length - 1]}.`
+                            : null}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                  <Grid item container alignItems='center'>
+                    <Grid item xs={2}>
+                      <img src={check} alt='checkmark' />
+                    </Grid>
+                    <Grid item xs={10}>
+                      <Typography variant='body1'>
+                        The custom features will be of {' '}
+                        {customFeatures.toLowerCase()}
+                        {`, and the project will be used by about ${users} users.`}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Grid>
+)
+
+
+const websiteSelection = (
+  <Grid container direction="column" style={{marginTop: '13em'}}>
+    <Grid item container alignItems="center">
+      <Grid item xs={2}>
+        <img src={check} alt="checkmark" />
+      </Grid>
+      <Grid item xs={10}>
+        <Typography variant="body1">
+          You want{" "}
+          {category === "Basic" ? "a Basic Website" : `an ${category} Website.`}
+        </Typography>
+      </Grid>
+    </Grid>
+  </Grid>
+);
+
+
 
   return (
     <Grid item container direction="row">
-      <Grid item container direction="column" lg>
-        <Grid item style={{ marginTop: "2em", marginLeft: "5em" }}>
-          <Typography variant="h2">Estimate</Typography>
+      <Grid item container direction="column" lg alignItems={matchesMD ? 'center' : undefined}>
+        <Grid
+          item
+          style={{ marginTop: "1em", marginLeft: matchesMD ? 0 : "5em" }}
+        >
+          <Typography variant="h2" align={matchesMD ? "center" : undefined}>
+            Estimate
+          </Typography>
         </Grid>
         <Grid item>
           <img
             src={estimate}
             alt="estimate"
-            style={{ maxWidth: "38em", marginRight: "10em", marginTop: "10em" }}
+            style={{
+              maxWidth: matchesMD ? '30em' : "38em",
+              marginRight: matchesMD ? 0 : "10em",
+              marginTop: matchesMD ? 0 : "10em",
+            }}
           />
         </Grid>
       </Grid>
@@ -539,7 +714,7 @@ const getPlatforms = () => {
         direction="column"
         alignItems="center"
         lg
-        style={{ marginRight: "2em", marginBottom: "25em" }}
+        style={{ marginRight: matchesMD ? 0 : "2em", marginBottom: "25em" }}
       >
         {questions
           .filter((question) => question.active)
@@ -554,6 +729,8 @@ const getPlatforms = () => {
                     fontSize: "2.25rem",
                     marginTop: "5em",
                     lineHeight: 1.25,
+                    marginLeft: matchesSM ? '1em' : 0,
+                    marginRight: matchesSM ? '1em' : 0,
                   }}
                 >
                   {question.title}
@@ -580,6 +757,7 @@ const getPlatforms = () => {
                       display: "grid",
                       textTransform: "none",
                       borderRadius: 0,
+                      marginBottom: matchesSM ? '1.5em' : 0,
                       backgroundColor: option.selected
                         ? theme.palette.common.orange
                         : null,
@@ -652,7 +830,10 @@ const getPlatforms = () => {
             onClick={() => {
               setDialogOpen(true);
               getTotal();
-              getPlatforms()
+              getPlatforms();
+              getFeatures();
+              getCustomFeatures();
+              getCategory();
             }}
           >
             Get Estimate
@@ -663,17 +844,28 @@ const getPlatforms = () => {
         style={{ zIndex: 1302 }}
         open={dialogOpen}
         onClose={() => setDialogOpen(false)}
+        fullWidth
+        maxWidth="lg"
+        fullScreen={matchesSM}
       >
         <Grid container justify="center">
-          <Grid item>
+          <Grid item style={{ marginTop: "1em", marginBottom: "1em" }}>
             <Typography variant="h2" align="center">
               Estimate
             </Typography>
           </Grid>
         </Grid>
         <DialogContent>
-          <Grid container>
-            <Grid item container direction="column" md={7}>
+          <Grid container justify="space-around"
+           direction={matchesSM ? 'column' : 'row'} 
+           alignItems={matchesSM ? 'center' : undefined}>
+            <Grid
+              item
+              container
+              direction="column"
+              md={7}
+              style={{ maxWidth: "20em" }}
+            >
               <Grid item style={{ marginBottom: "0.5em" }}>
                 <TextField
                   label="Name"
@@ -706,96 +898,60 @@ const getPlatforms = () => {
                 />
               </Grid>
               <Grid item style={{ maxWidth: matchesXS ? "100%" : "20em" }}>
-              <TextField
-                InputProps={{ disableUnderline: true }}
-                value={message}
-                className={classes.message}
-                multiline
-                fullWidth
-                rows={10}
-                id="message"
-                onChange={(e) => setMessage(e.target.value)}
-              />
-            </Grid>
-            <Grid item>
-              <Typography variant="body1" paragraph>
-                We can create this digital solution for an estimated{" "}
-                <span className={classes.specialText}>${total.toFixed(2)}</span>
-              </Typography>
-              <Typography variant="body1" paragraph>
-                Fill out your name, phone number, and email, place your request,
-                and we'll get back to you with details moving forward and a
-                final price.{" "}
-              </Typography>
-            </Grid>
-            </Grid>
-            <Grid item container direciton='column' md={5}>
-              <Grid item>
-                <Grid container direction='column'>
-                  <Grid item container alignItems='center'>
-                    <Grid item>
-                      <img src={check} alt='checkmark' />
-                    </Grid>
-                    <Grid item>
-                      <Typography variant='body1'>
-                        You want {service}
-                        {platforms.length > 0 ? ` for ${
-                              //if only web application is selected...
-                              platforms.indexOf("Web Application") > -1 &&
-                              platforms.length === 1
-                                ? 
-                                  "a Web Application."
-                                : //otherwise, if web application and another platform is selected...
-                                platforms.indexOf("Web Application") > -1 &&
-                                  platforms.length === 2
-                                ? 
-                                  `a Web Application and an ${platforms[1]}.`
-                                : //otherwise, if only one platform is selected which isn't web application...
-                                platforms.length === 1
-                                ? 
-                                  `an ${platforms[0]}`
-                                : //otherwise, if other two options are selected...
-                                platforms.length === 2
-                                ? 
-                                  "an iOS Application and an Android Application."
-                                : //otherwise if all three are selected...
-                                platforms.length === 3
-                                ? 
-                                  "a Web Application, an iOS Application, and an Android Application."
-                                : null
-                            }` : null}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                  <Grid item container alignItems='center'>
-                    <Grid item>
-                      <img src={check} alt='checkmark' />
-                    </Grid>
-                    <Grid item>
-                      <Typography variant='body1'>
-                        Second options check
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                  <Grid item container alignItems='center'>
-                    <Grid item>
-                      <img src={check} alt='checkmark' />
-                    </Grid>
-                    <Grid item>
-                      <Typography variant='body1'>
-                        Third options check
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Grid>
+                <TextField
+                  InputProps={{ disableUnderline: true }}
+                  value={message}
+                  className={classes.message}
+                  multiline
+                  fullWidth
+                  rows={10}
+                  id="message"
+                  onChange={(e) => setMessage(e.target.value)}
+                />
               </Grid>
               <Grid item>
-                <Button variant='contained' className={classes.estimateButton}>
-                  Place Request 
-                <img src={send} alt='paper airplane' style={{marginLeft: '0.5em'}}/> 
+                <Typography variant="body1" align={matchesSM ? 'center' : undefined} paragraph>
+                  We can create this digital solution for an estimated{" "}
+                  <span className={classes.specialText}>
+                    ${total.toFixed(2)}
+                  </span>
+                </Typography>
+                <Typography variant="body1" align={matchesSM ? 'center' : undefined} paragraph>
+                  Fill out your name, phone number, and email, place your
+                  request, and we'll get back to you with details moving forward
+                  and a final price.{" "}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid
+              item
+              container
+              direciton="column"
+              alignItems={matchesSM ? 'center' : undefined}
+              md={5}
+              style={{ maxWidth: "30em" }}
+            >
+              <Hidden smDown>
+              <Grid item>
+                {questions.length > 2 ? softwareSelection : websiteSelection}
+              </Grid>
+              </Hidden>
+              <Grid item style={{marginLeft: matchesSM ? '8em' : 0, marginBottom: matchesSM ? '0.8em' : 0}} >
+                <Button variant="contained"  className={classes.estimateButton}>
+                  Place Request
+                  <img
+                    src={send}
+                    alt="paper airplane"
+                    style={{ marginLeft: "0.5em" }}
+                  />
                 </Button>
               </Grid>
             </Grid>
+            <Hidden mdUp>
+              <Grid item>
+                <Button style={{fontWeight: 300}} color='primary' onClick={() => setDialogOpen(false)}>Cancel</Button>
+              </Grid>
+              </Hidden>
           </Grid>
         </DialogContent>
       </Dialog>
